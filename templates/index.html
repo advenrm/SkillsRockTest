@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tasks</title>
+  <link rel="stylesheet" href="/tasks/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+  <div style="max-width:850px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);" class="container-sm mt-5">
+        <div class="content-basicc">
+    <form action="/tasks" method="post">
+      <h2>Task Form</h2>
+      <div class="form-group">
+        <label for="title">Task Title:</label>
+        <input type="text" id="title" name="title" required>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Task Description:</label>
+        <input type="text" id="description" name="description">
+      </div>
+
+      <div class="form-group">
+        <label for="status">Task Status:</label>
+        <input type="text" id="status" name="status">
+      </div>
+
+      <button  class="btn btn-primary" type="submit">Submit</button>
+    </form>
+
+    </div>
+    </div>
+
+    <div style="max-width:850px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);" class="container-sm mt-5">
+      <table id="dataTable" class="table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Created at</th>
+          <th>Updated at</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{ range .Tasks }}
+        <tr>
+          <td>{{ .Title }}</td>
+          <td>{{ .Description }}</td>
+          <td>{{ .Status }}</td>
+          <td>{{ .CreatedAt }}</td>
+          <td>{{ .UpdatedAt }}</td>
+          <td>
+            <form action="/tasks/{{ .Id }}" method="delete" id="deleteForm{{ .Id }}" style="display:inline;">
+              <button class="btn btn-danger" type="button" onclick="confirmDelete('{{ .Id }}', '{{ .Title }}')">Delete</button>
+          </form>
+            <form action="/tasks/edit/{{ .Id }}" method="get" style="display:inline;">
+              <button class="btn btn-success" type="submit">Edit</button>
+            </form> 
+          </td>
+          
+        </tr>
+        {{ end }}
+      </tbody>
+    </table>
+</div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script src="/tasks/script.js"></script>
+
+
+</html>
